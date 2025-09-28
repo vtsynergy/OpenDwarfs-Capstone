@@ -110,8 +110,8 @@ This builds the `bfs` executable.
 [-c] parallel : threads=2  ms=1129.345  OK
 [-c] parallel : threads=8  ms=1131.023  OK
 [-c] parallel : threads=16 ms=1134.328  OK
+```
 - `n` = number of vertices  
 - `m` = number of directed edges in CSR  
 - `ms` = BFS runtime in milliseconds  
 - `OK` implies output of parallel code matches serial output  
-```
