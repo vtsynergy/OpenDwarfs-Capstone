@@ -2,9 +2,8 @@
 
 ## Overview
 This repository is a **subset** of the [OpenDwarfs benchmark suite](https://github.com/opendwarfs/opendwarfs).  
-OpenDwarfs is organized around the Berkeley Dwarfs taxonomy, which classifies computational patterns common in scientific and engineering applications.  
 
----
+OpenDwarfs is organized around the Berkeley Dwarfs taxonomy, which classifies computational patterns common in scientific and engineering applications.  
 
 # Project Background
 
@@ -26,21 +25,31 @@ This repository provides a **truncated version of OpenDwarfs** (full version: [O
 - **Spectral Methods** → `fft` (Fast Fourier Transform)  
 - **Structured Grids** → `gol` (Game of Life simulation)  
 
----
+# Objectives
+
+**Required objectives:**  
+For each dwarf, the code to be parallelized is located in `<programname>_parallel.cpp` inside the directory for that dwarf.  
+- If working in groups of three, parallelize **all six workloads** (two dwarfs to be parallelized by each team member).  
+- Use OpenMP to parallelize the workload in `<programname>_parallel.cpp` adding appropriate OpenMP pragma directives.  
+
+**Additional objectives** (not necessarily in order of relevance; you may pick any one or more that you find interesting):  
+1. Pick one dwarf out of the six and attempt to optimize the code beyond what is achieved by the initial placement of OpenMP directives. Your approach may include modifications to the code, algorithm, data structure, the way the workload is parallelized, or any combination of these changes. (Example: assign threads to nonzero elements in SPMV using a COO data structure instead of row-centric parallelism with CSR.)  
+2. Use **OpenACC** to offload the computation to a GPU. Parallelize `<dwarf>_parallel.cpp` using OpenACC and evaluate runtimes on `glogin` GPU nodes. Compare CPU (OpenMP) vs GPU (OpenACC) performance and analyze the results.  
+3. Use **OpenMP 4.5** to offload computation to a GPU. Compare performance between CPU (OpenMP) and GPU (OpenMP offload), and optionally vs GPU (OpenACC). Comment on the relative difficulty/ease of programming with the different frameworks.  
+
+Refer to the README in each dwarf’s directory for compilation and execution details.  
 
 ## Repository Structure
 ```
-branch-and-bound/       # Contains nqueens benchmark
-dense-linear-algebra/   # Contains lud benchmark
-graph-traversal/        # Contains bfs benchmark
-sparse-linear-algebra/  # Contains spmv benchmark
-spectral-methods/       # Contains fft benchmark
-structured_grids/       # Contains gol benchmark
+branch-and-bound/       # Contains nqueens benchmark  
+dense-linear-algebra/   # Contains lud benchmark  
+graph-traversal/        # Contains bfs benchmark  
+sparse-linear-algebra/  # Contains spmv benchmark  
+spectral-methods/       # Contains fft benchmark  
+structured_grids/       # Contains gol benchmark  
 ```
 
-Each directory contains its own source files and a `README.md` with build and run instructions.
-
----
+Each directory contains its own source files and a `README.md` with build and run instructions.  
 
 # Infrastructure Requirements
 
@@ -50,41 +59,19 @@ Performance should be measured on the **Virginia Tech rlogin/glogin clusters**:
 
 Log in with `ssh <your_pid>@rlogin.cs.vt.edu` (or `glogin` for GPUs) and clone this repository before starting.  
 
----
-
-# Objectives
-
-**Required objectives:**  
-For each dwarf, the code to be parallelized is located in `<dwarf>_parallel.cpp` inside the directory for that dwarf.  
-- If working in groups of three, parallelize all six workloads (two dwarfs to be parallelized by each team member).  
-- Use OpenMP by adding appropriate OpenMP pragma directives.  
-
-**Additional objectives** (not necessarily in order of relevance; you may pick any one or more that you find interesting):  
-1. Pick one application out of the six and attempt to optimize the code beyond what is achieved by the initial placement of OpenMP directives. Your approach may include modifications to the code, algorithm, data structure, the way the workload is parallelized, or any combination of these changes. (Example: assign threads to nonzero elements in SPMV using a COO data structure instead of row-centric parallelism with CSR.)  
-2. Use **OpenACC** to offload the computation to a GPU. Parallelize `<dwarf>_parallel.cpp` using OpenACC and evaluate runtimes on `glogin` GPU nodes. Compare CPU (OpenMP) vs GPU (OpenACC) performance and analyze the results.  
-3. Use **OpenMP 4.5** to offload computation to a GPU. Compare performance between CPU (OpenMP) and GPU (OpenMP offload), and optionally vs GPU (OpenACC). Comment on the relative difficulty/ease of programming with the different frameworks.  
-
-Refer to the README in each dwarf’s directory for compilation and execution details.  
-
----
-
 # Compilation
 
-See the `README.md` inside each dwarf’s directory for detailed build/run instructions.
-
----
+See the `README.md` inside each dwarf’s directory for detailed build/run instructions.  
 
 # Parallelization
-The **parallelization work** for this capstone is primarily located in the files named:
+The **workload to be parallelized** for this capstone is primarily located in the files named:  
 
 ```
 <program_name>_parallel.cpp
 ```
 
 These files contain the parallel implementations.  
-Your task is to analyze, parallelize, and optimize these implementations, then compare them to the serial versions.
-
----
+Your task is to analyze, parallelize, and optimize these implementations, then compare them to the serial versions.  
 
 # Example: BFS
 
@@ -93,14 +80,7 @@ Using the provided Makefile:
 ```bash
 make
 ```
-This builds the `bfs` executable.
-
-Manual build (optional):  
-```bash
-g++ -O3 -std=c++17 main.cpp bfs_serial.cpp bfs_parallel.cpp -o bfs
-```
-
----
+This builds the `bfs` executable.  
 
 ### How to run with different options
 
@@ -111,7 +91,7 @@ g++ -O3 -std=c++17 main.cpp bfs_serial.cpp bfs_parallel.cpp -o bfs
 - Compares `bfs_parallel` against `bfs_serial` on a sample graph.  
 - Also runs `bfs_parallel` with 1, 2, 8, 16 threads and prints time + OK/MISMATCH.  
 
-**Profiling mode**  
+**Performance evaluation**  
 ```bash
 ./bfs -p
 ```
@@ -134,4 +114,4 @@ g++ -O3 -std=c++17 main.cpp bfs_serial.cpp bfs_parallel.cpp -o bfs
 - `n` = number of vertices  
 - `m` = number of directed edges in CSR  
 - `ms` = BFS runtime in milliseconds  
-- `OK` means parallel matches serial  
+- `OK` implies output of parallel code matches serial output  
