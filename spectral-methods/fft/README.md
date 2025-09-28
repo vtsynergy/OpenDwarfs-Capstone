@@ -10,10 +10,10 @@ This code implements a **radix-2 FFT** with bit-reversal
 
 ## Input Signal
 
-For size $N$, the input is:  
-$$
-x[n] = \sin\left(\tfrac{100\pi}{N}n\right) + \sin\left(\tfrac{1000\pi}{N}n\right) + \sin\left(\tfrac{2000\pi}{N}n\right),\quad n = 0,1,\dots,N-1
-$$
+For size *N*, the input is:  
+
+$$x[n] = \sin\left(\tfrac{100\pi}{N}n\right) + \sin\left(\tfrac{1000\pi}{N}n\right) + \sin\left(\tfrac{2000\pi}{N}n\right), \quad n = 0,1,\dots,N-1$$  
+
 
 
 - Real part = `x[n]`  
