@@ -4,9 +4,10 @@
 This repository is a **subset** of the [OpenDwarfs benchmark suite](https://github.com/opendwarfs/opendwarfs).  
  
 OpenDwarfs is organized around the Berkeley Dwarfs taxonomy, which classifies computational patterns common in scientific and engineering applications.  
+This code includes the serial implementation of breadth-first search algorithm
 
 
-# Parallelization
+## Parallelization
 The **workload to be parallelized** for this capstone is primarily located in the files named:
 
 ```
@@ -17,8 +18,26 @@ These files contain the parallel implementations.
 Your task is to analyze, parallelize, and optimize these implementations, then compare them to the serial versions.
 
 ---
+## Get the data
+Use the provided script to download and extract matrices into `../data`:
+```bash
+chmod +x get_data.sh
+./get_data.sh
+```
+This pulls SuiteSparse tarballs and extracts them so each matrix appears under `../data/<name>/` (for example, `../data/hollywood-2009/hollywood-2009.mtx`).
+Feel free to update get_data.sh to add more matrices from https://sparse.tamu.edu/
 
-# Example: BFS
+## 3) Matrix representation (how the structs are used)
+We store matrices in **CSR (Compressed Sparse Row)** form:
+```cpp
+struct CSR {
+  int nrows;                 // number of rows
+  int ncols;                 // number of columns
+  std::vector<int> row_ptr;  // length nrows+1; offsets into col_idx/val
+  std::vector<int> col_idx;  // column index for each nonzero
+  std::vector<double> val;   // value for each nonzero
+};
+```
 
 ### How to compile
 Using the provided Makefile:  
