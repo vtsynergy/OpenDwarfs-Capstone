@@ -4,8 +4,10 @@
 Counts solutions to the N-Queens problem using a bitmask-based backtracking algorithm.
 - `count_nqueens_serial(n)` — single threaded.
 - `count_nqueens_parallel(n)` — same logic, to be parallelized using OpenMP directives 
+
+
 The program can:
-- Check correctness at `n=10` (expected: `724`).
+- Check correctness (expected value for  `n=10` : `724`).
 - Benchmark the code for `n ∈ {8,10,12,14,15}` with threads `{1,2,4,8,16,32}`.
 - Write results to `../output/results.csv` (directory auto-created).
 
