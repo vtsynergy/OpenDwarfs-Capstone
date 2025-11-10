@@ -28,16 +28,7 @@ This pulls SuiteSparse tarballs and extracts them so each matrix appears under `
 Feel free to update get_data.sh to add more matrices from https://sparse.tamu.edu/
 
 ## 3) Matrix representation (how the structs are used)
-We store matrices in **CSR (Compressed Sparse Row)** form:
-```cpp
-struct CSR {
-  int nrows;                 // number of rows
-  int ncols;                 // number of columns
-  std::vector<int> row_ptr;  // length nrows+1; offsets into col_idx/val
-  std::vector<int> col_idx;  // column index for each nonzero
-  std::vector<double> val;   // value for each nonzero
-};
-```
+We store matrices in **CSR (Compressed Sparse Row)** 
 
 ### How to compile
 Using the provided Makefile:  
