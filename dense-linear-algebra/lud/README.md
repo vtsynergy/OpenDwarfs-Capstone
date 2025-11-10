@@ -44,7 +44,7 @@ The performance mode evaluates these sizes:
 
 ## Notes
 
-- LU uses no pivoting. The Laplacian matrix is strictly diagonally dominant, so this is adequate for demonstration.
+- LU uses no pivoting. The Laplacian matrix is strictly diagonally dominant and zero pivoting is not required
 - Matrices are stored as `std::vector<std::vector<double>>` for clarity. For higher performance, consider a flat `std::vector<double>` with manual indexing.
 - Complexity is `O(N^3)` and memory is `O(N^2)`. The `N=4096` case is compute and memory heavy.
 
