@@ -5,12 +5,11 @@ A C++ program that builds a dense matrix from a 3D 7‑point Laplacian discretiz
 ## What it does
 
 - Builds an N×N dense matrix `A` for a 3D grid of size `nx × ny × nz` where `N = nx*ny*nz`.
-- 7‑point stencil: diagonal equals the number of in‑grid neighbors, each neighbor is −1.
 - Runs LU decomposition in place with no pivoting, stored as packed `[L|U]` inside `A`:
-  - `L` has unit diagonal and lives below the main diagonal.
-  - `U` is on and above the main diagonal.
-- `-c` compares the packed LU from the serial and the parallel entry points, and reports reconstruction error.
-- `-p` or `-P` times serial and parallel, and writes `lud_perf.csv` with runtimes and speedups.
+  - `L` is the lower triangular matrix.
+  - `U` is the upper triangular matrix.
+- `-c` compares the LU decomposition from the serial and the parallel implementations, and reports reconstruction error.
+- `-p` or `-P` times serial and parallel implementations, and writes runtimes and speedups to `lud_perf.csv` with.
 
 ## Build
 
